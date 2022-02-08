@@ -2,7 +2,20 @@ import { useState } from "react";
 import { TodoButtons } from "./TodoButtons";
 import { TodoTitle } from "./TodoTitle";
 
-export function Todo(props) {
+export interface Todo {
+  // Because the function is called straightaway, can set the primitive required
+  id: string;
+  title: string;
+  isComplete: boolean;
+}
+
+interface Props {
+  todo: Todo;
+  updateTodo: (id: string, updatedTodo: Partial<Todo>) => void;
+  deleteTodo: (id: string) => void;
+}
+
+export function TodoCard(props: Props) {
   const { todo, updateTodo, deleteTodo } = props;
   const { title, isComplete } = todo;
 

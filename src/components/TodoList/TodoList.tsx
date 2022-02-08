@@ -1,27 +1,27 @@
 import { useState } from "react";
 import { nanoid } from "nanoid";
-import { Todo } from "./Todo/Todo";
+import { Todo, TodoCard } from "./Todo/Todo";
 import { AddTodo } from "./AddTodo";
 
-const initialTodos = [
-  { id: nanoid(), title: "Make some 🔥 noodles", done: false },
-  { id: nanoid(), title: "Take care of the cats 🐈🐈🐱", done: true },
-  { id: nanoid(), title: "Fix the TV 📺", done: false },
+const initialTodos: Todo[] = [
+  { id: nanoid(), title: "Make some 🔥 noodles", isComplete: false },
+  { id: nanoid(), title: "Take care of the cats 🐈🐈🐱", isComplete: true },
+  { id: nanoid(), title: "Fix the TV 📺", isComplete: false },
 ];
 
 export function TodoList() {
   const [todos, setTodos] = useState(initialTodos);
 
-  function addTodo(newTodoTitle) {
+  function addTodo(newTodoTitle: string) {
     const newTodo = {
       id: nanoid(),
       title: newTodoTitle,
-      done: false,
+      isComplete: false,
     };
     setTodos([...todos, newTodo]);
   }
 
-  function updateTodo(id, updatedTodo) {
+  function updateTodo(id: string, updatedTodo: Partial<Todo>) {
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
         return {
@@ -34,7 +34,7 @@ export function TodoList() {
     setTodos(newTodos);
   }
 
-  function deleteTodo(id) {
+  function deleteTodo(id: string) {
     const newTodos = todos.filter((todo) => todo.id !== id);
     setTodos(newTodos);
   }
@@ -45,7 +45,7 @@ export function TodoList() {
       <AddTodo addTodo={addTodo} />
       <h2>My Todos</h2>
       {todos.map((todo, i) => (
-        <Todo
+        <TodoCard
           key={todo.id}
           todo={todo}
           updateTodo={updateTodo}
